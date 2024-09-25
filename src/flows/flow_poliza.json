@@ -1,0 +1,1668 @@
+{
+	"version": "3.1",
+	"data_api_version": "3.0",
+	"routing_model": {
+		"TITULAR": ["DEC_TITULAR", "ESPOSA", "HIJO_UNO"],
+		"ESPOSA": ["DEC_TITULAR", "HIJO_UNO"],
+		"HIJO_UNO": ["DEC_TITULAR", "HIJO_DOS"],
+		"HIJO_DOS": ["DEC_TITULAR", "HIJO_TRES"],
+		"HIJO_TRES": ["DEC_TITULAR"],
+		"DEC_TITULAR": ["DESPEDIDA", "DEC_ESPOSA", "DEC_HIJO_UNO"],
+		"DEC_ESPOSA": ["DESPEDIDA", "DEC_HIJO_UNO"],
+		"DEC_HIJO_UNO": ["DESPEDIDA", "DEC_HIJO_DOS"],
+		"DEC_HIJO_DOS": ["DESPEDIDA", "DEC_HIJO_TRES"],
+		"DEC_HIJO_TRES": ["DESPEDIDA"],
+		"DESPEDIDA": []
+	},
+	"screens": [
+		{
+			"id": "TITULAR",
+			"terminal": true,
+			"title": "Datos Personales del Titular",
+			"data": {
+				"city": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"title": {
+								"type": "string"
+							}
+						}
+					},
+					"__example__": [
+						{
+							"id": "1",
+							"title": "Light City, SO"
+						}
+					]
+				},
+				"name": {
+					"type": "string",
+					"__example__": "Hello World"
+				},
+				"email": {
+					"type": "string",
+					"__example__": "etc@etc.com"
+				},
+				"cel": {
+					"type": "string",
+					"__example__": "1122334455"
+				},
+				"plans": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"title": {
+								"type": "string"
+							}
+						}
+					},
+					"__example__": [
+						{
+							"id": "Classicx",
+							"title": "Classic X"
+						},
+						{
+							"id": "Oxford",
+							"title": "Oxford"
+						},
+						{
+							"id": "Taylored",
+							"title": "Taylored"
+						},
+						{
+							"id": "Wagon",
+							"title": "Wagon"
+						}
+					]
+				}
+			},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Titular",
+						"init-values": {
+							"nombreTitular": "${data.name}",
+							"emailTitular": "${data.email}",
+							"celTitular": "${data.cel}"
+						},
+						"children": [
+							{
+								"type": "TextInput",
+								"label": "Nombre completo",
+								"input-type": "text",
+								"name": "nombreTitular",
+								"required": true
+							},
+							{
+								"type": "DatePicker",
+								"name": "fechaTitular",
+								"label": "Fecha de Nacimiento",
+								"min-date": "-378648000000",
+								"max-date": "1704110400000",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"label": "Sexo Titular",
+								"name": "sexo_titular",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Hombre",
+										"title": "Masculino"
+									},
+									{
+										"id": "Mujer",
+										"title": "Femenino"
+									},
+									{
+										"id": "Otro",
+										"title": "Sin identificar"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar documento",
+								"input-type": "number",
+								"name": "dniTitular",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar correo",
+								"input-type": "email",
+								"name": "emailTitular",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar celular",
+								"input-type": "phone",
+								"name": "celTitular",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar dirección",
+								"input-type": "text",
+								"name": "direccion",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"label": "Localidad",
+								"name": "localidad",
+								"data-source": "${data.city}",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Codigo Postal",
+								"input-type": "text",
+								"name": "codigoPostal",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"name": "plan",
+								"label": "Seleccione su plan",
+								"required": true,
+								"data-source": "${data.plans}"
+							},
+							{
+								"type": "Footer",
+								"label": "Continuar",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"fecha_nac_titular": "${form.fechaTitular}",
+										"sexo_titular": "${form.sexo_titular}",
+										"dni_titular": "${form.dniTitular}",
+										"direccion": "${form.direccion}",
+										"codigopostal": "${form.codigoPostal}",
+										"plan": "${form.plan}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "ESPOSA",
+			"terminal": true,
+			"title": "Datos Personales Esposa",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Esposa",
+						"children": [
+							{
+								"type": "TextInput",
+								"label": "Nombre Completo",
+								"input-type": "text",
+								"name": "nombreEsposa",
+								"required": true
+							},
+							{
+								"type": "DatePicker",
+								"name": "fechaEsposa",
+								"label": "Fecha de Nacimiento",
+								"min-date": "-378648000000",
+								"max-date": "1704110400000",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"label": "Sexo Conyuge",
+								"name": "sexo_conyuge",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Hombre",
+										"title": "Masculino"
+									},
+									{
+										"id": "Mujer",
+										"title": "Femenino"
+									},
+									{
+										"id": "Otro",
+										"title": "Sin identificar"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar documento",
+								"input-type": "number",
+								"name": "dniEsposa",
+								"required": true
+							},
+							{
+								"type": "Footer",
+								"label": "Continuar",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"nombre_conyuge": "${form.nombreEsposa}",
+										"fecha_nac_conyuge": "${form.fechaEsposa}",
+										"dni_conyuge": "${form.dniEsposa}",
+										"sexo_conyuge": "${form.sexo_conyuge}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "HIJO_UNO",
+			"terminal": true,
+			"title": "Datos Personales de Hijo",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Hijo 1",
+						"children": [
+							{
+								"type": "TextInput",
+								"label": "Nombre Completo",
+								"input-type": "text",
+								"name": "nombreHijoUno",
+								"required": true
+							},
+							{
+								"type": "DatePicker",
+								"name": "fechaHijoUno",
+								"label": "Fecha de Nacimiento",
+								"min-date": "-378648000000",
+								"max-date": "1704110400000",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"label": "Sexo Hijo 1",
+								"name": "sexo_hijoUno",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Hombre",
+										"title": "Masculino"
+									},
+									{
+										"id": "Mujer",
+										"title": "Femenino"
+									},
+									{
+										"id": "Otro",
+										"title": "Sin identificar"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar documento",
+								"input-type": "number",
+								"name": "dniHijoUno",
+								"required": true
+							},
+							{
+								"type": "Footer",
+								"label": "Continuar",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"nom_hijo": "${form.nombreHijoUno}",
+										"fnac_hijo": "${form.fechaHijoUno}",
+										"dni_hijo": "${form.dniHijoUno}",
+										"sexo_hijo": "${form.sexo_hijoUno}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "HIJO_DOS",
+			"terminal": true,
+			"title": "Datos Personales de Hijo 2",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Hijo 2",
+						"children": [
+							{
+								"type": "TextInput",
+								"label": "Nombre Completo",
+								"input-type": "text",
+								"name": "nombreHijoDos",
+								"required": true
+							},
+							{
+								"type": "DatePicker",
+								"name": "fechaHijoDos",
+								"label": "Fecha de Nacimiento",
+								"min-date": "-378648000000",
+								"max-date": "1704110400000",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"label": "Sexo Hijo 2",
+								"name": "sexo_hijoDos",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Hombre",
+										"title": "Masculino"
+									},
+									{
+										"id": "Mujer",
+										"title": "Femenino"
+									},
+									{
+										"id": "Otro",
+										"title": "Sin identificar"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar documento",
+								"input-type": "number",
+								"name": "dniHijoDos",
+								"required": true
+							},
+							{
+								"type": "Footer",
+								"label": "Continuar",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"nom_hijo": "${form.nombreHijoDos}",
+										"fnac_hijo": "${form.fechaHijoDos}",
+										"dni_hijo": "${form.dniHijoDos}",
+										"sexo_hijo": "${form.sexo_hijoDos}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "HIJO_TRES",
+			"terminal": true,
+			"title": "Datos Personales de Hijo 3",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Hijo 3",
+						"children": [
+							{
+								"type": "TextInput",
+								"label": "Nombre Completo",
+								"input-type": "text",
+								"name": "nombreHijoTres",
+								"required": true
+							},
+							{
+								"type": "DatePicker",
+								"name": "fechaHijoTres",
+								"label": "Fecha de Nacimiento",
+								"min-date": "-378648000000",
+								"max-date": "1704110400000",
+								"required": true
+							},
+							{
+								"type": "Dropdown",
+								"label": "Sexo Hijo 3",
+								"name": "sexo_hijoTres",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Hombre",
+										"title": "Masculino"
+									},
+									{
+										"id": "Mujer",
+										"title": "Femenino"
+									},
+									{
+										"id": "Otro",
+										"title": "Sin identificar"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Ingresar documento",
+								"input-type": "number",
+								"name": "dniHijoTres",
+								"required": true
+							},
+							{
+								"type": "Footer",
+								"label": "Continuar",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"nom_hijo": "${form.nombreHijoTres}",
+										"fnac_hijo": "${form.fechaHijoTres}",
+										"dni_hijo": "${form.dniHijoTres}",
+										"sexo_hijo": "${form.sexo_hijoTres}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "DEC_TITULAR",
+			"terminal": true,
+			"title": "Declaración Jurada de Salud Titular",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Dec Titular",
+						"children": [
+							{
+								"type": "TextHeading",
+								"text": "Declaración Jurada de Salud Titular",
+								"visible": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Altura (en cm)",
+								"input-type": "number",
+								"name": "alturaTitular",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Peso (en Kg)",
+								"input-type": "number",
+								"name": "pesoTitular",
+								"required": true
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Toma alguna medicación?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "medTitular",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Indicar medicación",
+								"input-type": "text",
+								"name": "medicacionTitular",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Se encuentra actualmente bajo tratamiento médico?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "tratTitular",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar tratamiento",
+								"input-type": "text",
+								"name": "tratamientoTitular",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene diagnosticada alguna enfermedad en los últimos 12 meses?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfTitular",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar enfermedad",
+								"input-type": "text",
+								"name": "enfermedadTitular",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene indicado realizarse estudios, análisis y/o prácticas médicas?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "estTitular",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar estudios",
+								"input-type": "text",
+								"name": "estudiosTitular",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Ha sido internado/a?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "internadoTitular",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextBody",
+								"text": "Posee alguna de las siguientes enfermedades, patologías y/o diagnósticos:"
+							},
+							{
+								"type": "TextBody",
+								"text": "Antecedentes Neurológicos / Psiquiátricos, Alteraciones Visuales, Alteraciones de nariz, garganta u oído, Diabetes / Obesidad, Adicciones a drogas o alcohol, Alteraciones de la sangre, Alteraciones Pulmonares, Nódulos, Quistes o Tumores, Alteraciones renales/vejiga/próstata, Alteraciones ginecológicas y/u obstétricas, Embarazo, Afecciones musculares y/o de huesos, Enfermedades congénitas o hereditarias."
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfsTitular",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detalle cuál",
+								"input-type": "text",
+								"name": "enfermedadesTitular",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "Detalle aquí si posee alguna enfermedad, dolencia o patología que no conste en el presente cuestionario."
+							},
+							{
+								"type": "TextArea",
+								"required": false,
+								"label": "Detallar patología",
+								"name": "extrasTitular"
+							},
+							{
+								"type": "Footer",
+								"label": "Continue",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"alturaTitular": "${form.alturaTitular}",
+										"pesoTitular": "${form.pesoTitular}",
+										"opMedicacionTitular": "${form.medTitular}",
+										"medicacionTitular": "${form.medicacionTitular}",
+										"opTratamientoTitular": "${form.tratTitular}",
+										"tratamientoTitular": "${form.tratamientoTitular}",
+										"opEnfermedadTitular": "${form.enfTitular}",
+										"enfermedadTitular": "${form.enfermedadTitular}",
+										"opEstudiosTitular": "${form.estTitular}",
+										"estudiosTitular": "${form.estudiosTitular}",
+										"internadoTitular": "${form.internadoTitular}",
+										"opEnfermedadesTitular": "${form.enfsTitular}",
+										"enfermedadesTitular": "${form.enfermedadesTitular}",
+										"extrasTitular": "${form.extrasTitular}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "DEC_ESPOSA",
+			"terminal": true,
+			"title": "Declaración Jurada de Salud Esposa/Conyuge",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Dec Esposa",
+						"children": [
+							{
+								"type": "TextHeading",
+								"text": "Declaración Jurada de Salud Esposa",
+								"visible": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Altura (en cm)",
+								"input-type": "number",
+								"name": "alturaEsposa",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Peso (en Kg)",
+								"input-type": "number",
+								"name": "pesoEsposa",
+								"required": true
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Toma alguna medicación?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "medEsposa",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Indicar medicación",
+								"input-type": "text",
+								"name": "medicacionEsposa",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Se encuentra actualmente bajo tratamiento médico?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "tratEsposa",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar tratamiento",
+								"input-type": "text",
+								"name": "tratamientoEsposa",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene diagnosticada alguna enfermedad en los últimos 12 meses?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfEsposa",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar enfermedad",
+								"input-type": "text",
+								"name": "enfermedadEsposa",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene indicado realizarse estudios, análisis y/o prácticas médicas?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "estEsposa",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar estudios",
+								"input-type": "text",
+								"name": "estudiosEsposa",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Ha sido internado/a?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "internadoEsposa",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextBody",
+								"text": "Posee alguna de las siguientes enfermedades, patologías y/o diagnósticos:"
+							},
+							{
+								"type": "TextBody",
+								"text": "Antecedentes Neurológicos / Psiquiátricos, Alteraciones Visuales, Alteraciones de nariz, garganta u oído, Diabetes / Obesidad, Adicciones a drogas o alcohol, Alteraciones de la sangre, Alteraciones Pulmonares, Nódulos, Quistes o Tumores, Alteraciones renales/vejiga/próstata, Alteraciones ginecológicas y/u obstétricas, Embarazo, Afecciones musculares y/o de huesos, Enfermedades congénitas o hereditarias."
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfsEsposa",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detalle cual",
+								"input-type": "text",
+								"name": "enfermedadesEsposa",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "Detalle aquí si posee alguna enfermedad, dolencia o patología que no conste en el presente cuestionario."
+							},
+							{
+								"type": "TextArea",
+								"required": false,
+								"label": "Detallar patología",
+								"name": "extrasEsposa"
+							},
+							{
+								"type": "Footer",
+								"label": "Continue",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"alturaEsposa": "${form.alturaEsposa}",
+										"pesoEsposa": "${form.pesoEsposa}",
+										"opMedicacionEsposa": "${form.medEsposa}",
+										"medicacionEsposa": "${form.medicacionEsposa}",
+										"opTratamientoEsposa": "${form.tratEsposa}",
+										"tratamientoEsposa": "${form.tratamientoEsposa}",
+										"opEnfermedadEsposa": "${form.enfEsposa}",
+										"enfermedadEsposa": "${form.enfermedadEsposa}",
+										"opEstudiosEsposa": "${form.estEsposa}",
+										"estudiosEsposa": "${form.estudiosEsposa}",
+										"internadoEsposa": "${form.internadoEsposa}",
+										"opEnfermedadesEsposa": "${form.enfsEsposa}",
+										"enfermedadesEsposa": "${form.enfermedadesEsposa}",
+										"extrasEsposa": "${form.extrasEsposa}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "DEC_HIJO_UNO",
+			"terminal": true,
+			"title": "Declaracion Jurada de Salud Hijo 1",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Dec HijoUno",
+						"children": [
+							{
+								"type": "TextHeading",
+								"text": "Declaración Jurada de Salud Hijo 1",
+								"visible": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Altura (en cm)",
+								"input-type": "number",
+								"name": "alturaHijoUno",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Peso (en Kg)",
+								"input-type": "number",
+								"name": "pesoHijoUno",
+								"required": true
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Toma alguna medicación?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "medHijoUno",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Indicar medicación",
+								"input-type": "text",
+								"name": "medicacionHijoUno",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Se encuentra actualmente bajo tratamiento médico?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "tratHijoUno",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar tratamiento",
+								"input-type": "text",
+								"name": "tratamientoHijoUno",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene diagnosticada alguna enfermedad en los últimos 12 meses?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfHijoUno",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar enfermedad",
+								"input-type": "text",
+								"name": "enfermedadHijoUno",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene indicado realizarse estudios, análisis y/o prácticas médicas?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "estHijoUno",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar estudios",
+								"input-type": "text",
+								"name": "estudiosHijoUno",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Ha sido internado/a?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "internadoHijoUno",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextBody",
+								"text": "Posee alguna de las siguientes enfermedades, patologías y/o diagnósticos:"
+							},
+							{
+								"type": "TextBody",
+								"text": "Antecedentes Neurológicos / Psiquiátricos, Alteraciones Visuales, Alteraciones de nariz, garganta u oído, Diabetes / Obesidad, Adicciones a drogas o alcohol, Alteraciones de la sangre, Alteraciones Pulmonares, Nódulos, Quistes o Tumores, Alteraciones renales/vejiga/próstata, Alteraciones ginecológicas y/u obstétricas, Embarazo, Afecciones musculares y/o de huesos, Enfermedades congénitas o hereditarias."
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfsHijoUno",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detalle cual",
+								"input-type": "text",
+								"name": "enfermedadesHijoUno",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "Detalle aquí si posee alguna enfermedad, dolencia o patología que no conste en el presente cuestionario."
+							},
+							{
+								"type": "TextArea",
+								"required": false,
+								"label": "Detallar patología",
+								"name": "extrasHijoUno"
+							},
+							{
+								"type": "Footer",
+								"label": "Continue",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"alturaHijoUno": "${form.alturaHijoUno}",
+										"pesoHijoUno": "${form.pesoHijoUno}",
+										"opMedicacionHijoUno": "${form.medHijoUno}",
+										"medicacionHijoUno": "${form.medicacionHijoUno}",
+										"opTratamientoHijoUno": "${form.tratHijoUno}",
+										"tratamientoHijoUno": "${form.tratamientoHijoUno}",
+										"opEnfermedadHijoUno": "${form.enfHijoUno}",
+										"enfermedadHijoUno": "${form.enfermedadHijoUno}",
+										"opEstudiosHijoUno": "${form.estHijoUno}",
+										"estudiosHijoUno": "${form.estudiosHijoUno}",
+										"internadoHijoUno": "${form.internadoHijoUno}",
+										"opEnfermedadesHijoUno": "${form.enfsHijoUno}",
+										"enfermedadesHijoUno": "${form.enfermedadesHijoUno}",
+										"extrasHijoUno": "${form.extrasHijoUno}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "DEC_HIJO_DOS",
+			"terminal": true,
+			"title": "Declaracion Jurada de Salud Hijo 2",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Dec HijoDos",
+						"children": [
+							{
+								"type": "TextHeading",
+								"text": "Declaración Jurada de Salud Hijo 2",
+								"visible": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Altura (en cm)",
+								"input-type": "number",
+								"name": "alturaHijoDos",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Peso (en Kg)",
+								"input-type": "number",
+								"name": "pesoHijoDos",
+								"required": true
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Toma alguna medicación?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "medHijoDos",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Indicar medicación",
+								"input-type": "text",
+								"name": "medicacionHijoDos",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Se encuentra actualmente bajo tratamiento médico?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "tratHijoDos",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar tratamiento",
+								"input-type": "text",
+								"name": "tratamientoHijoDos",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene diagnosticada alguna enfermedad en los últimos 12 meses?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfHijoDos",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar enfermedad",
+								"input-type": "text",
+								"name": "enfermedadHijoDos",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene indicado realizarse estudios, análisis y/o prácticas médicas?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "estHijoDos",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar estudios",
+								"input-type": "text",
+								"name": "estudiosHijoDos",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Ha sido internado/a?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "internadoHijoDos",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextBody",
+								"text": "Posee alguna de las siguientes enfermedades, patologías y/o diagnósticos:"
+							},
+							{
+								"type": "TextBody",
+								"text": "Antecedentes Neurológicos / Psiquiátricos, Alteraciones Visuales, Alteraciones de nariz, garganta u oído, Diabetes / Obesidad, Adicciones a drogas o alcohol, Alteraciones de la sangre, Alteraciones Pulmonares, Nódulos, Quistes o Tumores, Alteraciones renales/vejiga/próstata, Alteraciones ginecológicas y/u obstétricas, Embarazo, Afecciones musculares y/o de huesos, Enfermedades congénitas o hereditarias."
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfsHijoDos",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detalle cual",
+								"input-type": "text",
+								"name": "enfermedadesHijoDos",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "Detalle aquí si posee alguna enfermedad, dolencia o patología que no conste en el presente cuestionario."
+							},
+							{
+								"type": "TextArea",
+								"required": false,
+								"label": "Detallar patología",
+								"name": "extrasHijoDos"
+							},
+							{
+								"type": "Footer",
+								"label": "Continue",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"alturaHijoDos": "${form.alturaHijoDos}",
+										"pesoHijoDos": "${form.pesoHijoDos}",
+										"opMedicacionHijoDos": "${form.medHijoDos}",
+										"medicacionHijoDos": "${form.medicacionHijoDos}",
+										"opTratamientoHijoDos": "${form.tratHijoDos}",
+										"tratamientoHijoDos": "${form.tratamientoHijoDos}",
+										"opEnfermedadHijoDos": "${form.enfHijoDos}",
+										"enfermedadHijoDos": "${form.enfermedadHijoDos}",
+										"opEstudiosHijoDos": "${form.estHijoDos}",
+										"estudiosHijoDos": "${form.estudiosHijoDos}",
+										"internadoHijoDos": "${form.internadoHijoDos}",
+										"opEnfermedadesHijoDos": "${form.enfsHijoDos}",
+										"enfermedadesHijoDos": "${form.enfermedadesHijoDos}",
+										"extrasHijoDos": "${form.extrasHijoDos}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "DEC_HIJO_TRES",
+			"terminal": true,
+			"title": "Declaracion Jurada de Salud Hijo 3",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Dec HijoTres",
+						"children": [
+							{
+								"type": "TextHeading",
+								"text": "Declaración Jurada de Salud Hijo 3",
+								"visible": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Altura (en cm)",
+								"input-type": "number",
+								"name": "alturaHijoTres",
+								"required": true
+							},
+							{
+								"type": "TextInput",
+								"label": "Peso (en Kg)",
+								"input-type": "number",
+								"name": "pesoHijoTres",
+								"required": true
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Toma alguna medicación?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "medHijoTres",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Indicar medicación",
+								"input-type": "text",
+								"name": "medicacionHijoTres",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Se encuentra actualmente bajo tratamiento médico?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "tratHijoTres",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar tratamiento",
+								"input-type": "text",
+								"name": "tratamientoHijoTres",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene diagnosticada alguna enfermedad en los últimos 12 meses?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfHijoTres",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar enfermedad",
+								"input-type": "text",
+								"name": "enfermedadHijoTres",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Tiene indicado realizarse estudios, análisis y/o prácticas médicas?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "estHijoTres",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detallar estudios",
+								"input-type": "text",
+								"name": "estudiosHijoTres",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "¿Ha sido internado/a?"
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "internadoHijoTres",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextBody",
+								"text": "Posee alguna de las siguientes enfermedades, patologías y/o diagnósticos:"
+							},
+							{
+								"type": "TextBody",
+								"text": "Antecedentes Neurológicos / Psiquiátricos, Alteraciones Visuales, Alteraciones de nariz, garganta u oído, Diabetes / Obesidad, Adicciones a drogas o alcohol, Alteraciones de la sangre, Alteraciones Pulmonares, Nódulos, Quistes o Tumores, Alteraciones renales/vejiga/próstata, Alteraciones ginecológicas y/u obstétricas, Embarazo, Afecciones musculares y/o de huesos, Enfermedades congénitas o hereditarias."
+							},
+							{
+								"type": "RadioButtonsGroup",
+								"name": "enfsHijoTres",
+								"label": "",
+								"required": true,
+								"data-source": [
+									{
+										"id": "Si",
+										"title": "Si"
+									},
+									{
+										"id": "No",
+										"title": "No"
+									}
+								]
+							},
+							{
+								"type": "TextInput",
+								"label": "Detalle cual",
+								"input-type": "text",
+								"name": "enfermedadesHijoTres",
+								"required": false
+							},
+							{
+								"type": "TextBody",
+								"text": "Detalle aquí si posee alguna enfermedad, dolencia o patología que no conste en el presente cuestionario."
+							},
+							{
+								"type": "TextArea",
+								"required": false,
+								"label": "Detallar patología",
+								"name": "extrasHijoTres"
+							},
+							{
+								"type": "Footer",
+								"label": "Continue",
+								"on-click-action": {
+									"name": "data_exchange",
+									"payload": {
+										"alturaHijoTres": "${form.alturaHijoTres}",
+										"pesoHijoTres": "${form.pesoHijoTres}",
+										"opMedicacionHijoTres": "${form.medHijoTres}",
+										"medicacionHijoTres": "${form.medicacionHijoTres}",
+										"opTratamientoHijoTres": "${form.tratHijoTres}",
+										"tratamientoHijoTres": "${form.tratamientoHijoTres}",
+										"opEnfermedadHijoTres": "${form.enfHijoTres}",
+										"enfermedadHijoTres": "${form.enfermedadHijoTres}",
+										"opEstudiosHijoTres": "${form.estHijoTres}",
+										"estudiosHijoTres": "${form.estudiosHijoTres}",
+										"internadoHijoTres": "${form.internadoHijoTres}",
+										"opEnfermedadesHijoTres": "${form.enfsHijoTres}",
+										"enfermedadesHijoTres": "${form.enfermedadesHijoTres}",
+										"extrasHijoTres": "${form.extrasHijoTres}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "DESPEDIDA",
+			"terminal": true,
+			"title": "",
+			"data": {},
+			"layout": {
+				"type": "SingleColumnLayout",
+				"children": [
+					{
+						"type": "Form",
+						"name": "Despedida",
+						"children": [
+							{
+								"type": "TextHeading",
+								"text": "Muchas Gracias por completar la solicitud",
+								"visible": true
+							},
+							{
+								"type": "TextBody",
+								"text": "En breve nuestro departamento comercial se contactará con vos",
+								"visible": true
+							},
+							{
+								"type": "Footer",
+								"label": "Continue",
+								"on-click-action": {
+									"name": "complete",
+									"payload": {}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}
