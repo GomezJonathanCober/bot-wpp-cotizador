@@ -21,7 +21,7 @@ export async function actualizarPoliza(data, userId) {
 		}
 
 		const responseJson = await response.json();
-		//console.log("Actualizar Poliza:", responseJson);
+		console.log("Actualizar Poliza:", responseJson);
 		await new Promise((resolve) => setTimeout(resolve, 3000));
 		console.log("Enviar pdf a:", userId);
 		const sendPdf = await fetch(
