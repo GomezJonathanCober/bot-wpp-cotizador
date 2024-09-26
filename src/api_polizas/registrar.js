@@ -20,6 +20,7 @@ export async function registrarPoliza(data) {
 		}
 
 		const responseJson = await response.json();
+		console.log("Nueva Poliza:", responseJson);
 		return responseJson;
 	} catch (error) {
 		console.error("Error al realizar la solicitud:", error);
