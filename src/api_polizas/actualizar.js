@@ -37,7 +37,7 @@ export async function actualizarPoliza(data, userId) {
 			}
 		);
 		const sendpdfjson = await sendPdf.text();
-		//console.log("SendPDF:", sendpdfjson);
+		console.log("SendPDF:", sendpdfjson);
 		return responseJson;
 	} catch (error) {
 		console.error("Error al realizar la solicitud:", error);
