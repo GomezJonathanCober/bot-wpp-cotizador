@@ -89,7 +89,7 @@ const flowGenerarCotizacion = addKeyword(EVENTS.ACTION)
 	})
 	.addAction(
 		{ capture: true },
-		async (ctx, { state, fallBack, provider, gotoFlow, endFlow }) => {
+		async (ctx, { state, fallBack, provider, endFlow }) => {
 			if (ctx.body !== "Reservar" && ctx.body !== "Contactar Asesor") {
 				await provider.sendMessage(ctx.from, "*Opcion Invalida", {
 					options: null,
@@ -127,7 +127,7 @@ const flowGenerarCotizacion = addKeyword(EVENTS.ACTION)
 	);
 
 const flowHijo = addKeyword(EVENTS.ACTION)
-	.addAction(async (ctx, { flowDynamic, provider }) => {
+	.addAction(async (ctx, { provider }) => {
 		await provider.sendMessage(ctx.from, "Ingresá la *edad* de tu *hijo/a*:", {
 			options: null,
 		});
@@ -216,7 +216,8 @@ const flowDataTitular = addKeyword(EVENTS.ACTION)
 				ctx.type !== "interactive" ||
 				(ctx.body !== "Particular" &&
 					ctx.body !== "dependencyRelationship" &&
-					ctx.body !== "categoryMonotribute")
+					ctx.body !== "categoryMonotribute" &&
+					ctx.body !== "Salir")
 			) {
 				const list = {
 					header: {
@@ -262,6 +263,10 @@ const flowDataTitular = addKeyword(EVENTS.ACTION)
 				);
 				await provider.sendList(ctx.from, list);
 				return fallBack();
+			}
+			if (ctx.body === "Salir") {
+				state.clear();
+				return gotoFlow(flowSaludo);
 			}
 			await state.update({ tipoAfiTit: ctx.title_list_reply });
 			if (ctx.body === "dependencyRelationship") {
@@ -343,7 +348,8 @@ const flowDataConyuge = addKeyword(EVENTS.ACTION)
 				ctx.type !== "interactive" ||
 				(ctx.body !== "Particular" &&
 					ctx.body !== "dependencyRelationship" &&
-					ctx.body !== "categoryMonotribute")
+					ctx.body !== "categoryMonotribute" &&
+					ctx.body !== "Salir")
 			) {
 				const list = {
 					header: {
@@ -389,6 +395,10 @@ const flowDataConyuge = addKeyword(EVENTS.ACTION)
 				);
 				await provider.sendList(ctx.from, list);
 				return fallBack();
+			}
+			if (ctx.body === "Salir") {
+				state.clear();
+				return gotoFlow(flowSaludo);
 			}
 			await state.update({ tipoAfiCony: ctx.title_list_reply });
 			if (ctx.body === "dependencyRelationship") {
@@ -482,7 +492,8 @@ const flowMonotributoTitular = addKeyword(EVENTS.ACTION)
 					ctx.body !== "H" &&
 					ctx.body !== "I" &&
 					ctx.body !== "J" &&
-					ctx.body !== "K")
+					ctx.body !== "K" &&
+					ctx.body !== "Salir")
 			) {
 				const list = {
 					header: {
@@ -552,6 +563,10 @@ const flowMonotributoTitular = addKeyword(EVENTS.ACTION)
 				);
 				await provider.sendList(ctx.from, list);
 				return fallBack();
+			}
+			if (ctx.body === "Salir") {
+				state.clear();
+				return gotoFlow(flowSaludo);
 			}
 			await state.update({ cate_mono_tit: ctx.title_list_reply });
 			return gotoFlow(flowGenerarCotizacion);
@@ -651,7 +666,8 @@ const flowMonotributoConyuge = addKeyword(EVENTS.ACTION)
 					ctx.body !== "H" &&
 					ctx.body !== "I" &&
 					ctx.body !== "J" &&
-					ctx.body !== "K")
+					ctx.body !== "K" &&
+					ctx.body !== "Salir")
 			) {
 				const list = {
 					header: {
@@ -722,6 +738,10 @@ const flowMonotributoConyuge = addKeyword(EVENTS.ACTION)
 				await provider.sendList(ctx.from, list);
 				return fallBack();
 			}
+			if (ctx.body === "Salir") {
+				state.clear();
+				return gotoFlow(flowSaludo);
+			}
 			await state.update({ cate_mono_cony: ctx.title_list_reply });
 			let hijos = state.get("cantHijos");
 			if (hijos) {
@@ -758,7 +778,7 @@ const flowFormulario = addKeyword("Quiero ser Socio")
 	.addAnswer(
 		"Escribí tu *nombre* y *apellido*:",
 		{ capture: true },
-		async (ctx, { state, flowDynamic, fallBack, provider }) => {
+		async (ctx, { state, fallBack }) => {
 			if (!validarNombre(ctx.body)) {
 				return fallBack(
 					"Nombre o Apellido invalidos (minimo 3 letras para nombre y apellido)"
@@ -814,68 +834,75 @@ const flowFormulario = addKeyword("Quiero ser Socio")
 		};
 		await provider.sendList(ctx.from, list);
 	})
-	.addAction({ capture: true }, async (ctx, { state, fallBack, provider }) => {
-		if (
-			ctx.type !== "interactive" ||
-			(ctx.body !== "Caba" &&
-				ctx.body !== "Gba Norte" &&
-				ctx.body !== "Gba Sur" &&
-				ctx.body !== "Gba Oeste")
-		) {
-			const list = {
-				header: {
-					type: "text",
-					text: "",
-				},
-				body: {
-					text: "Seleccioná tu *Zona de Residencia*",
-				},
-				footer: {
-					text: "",
-				},
-				action: {
-					button: "ZONAS",
-					sections: [
-						{
-							title: "",
-							rows: [
-								{
-									id: "Caba",
-									title: "CABA",
-								},
-								{
-									id: "Gba Norte",
-									title: "GBA Norte",
-								},
-								{
-									id: "Gba Sur",
-									title: "GBA Sur",
-								},
-								{
-									id: "Gba Oeste",
-									title: "GBA Oeste",
-								},
-								{
-									id: "Salir",
-									title: "Volver al menu principal",
-								},
-							],
-						},
-					],
-				},
-			};
-			await provider.sendMessage(
-				ctx.from,
-				"*Localidad* ingresada invalida, selecciona una de las localidades",
-				{ options: null }
-			);
-			await provider.sendList(ctx.from, list);
+	.addAction(
+		{ capture: true },
+		async (ctx, { state, fallBack, provider, gotoFlow }) => {
+			if (
+				ctx.type !== "interactive" ||
+				(ctx.body !== "Caba" &&
+					ctx.body !== "Gba Norte" &&
+					ctx.body !== "Gba Sur" &&
+					ctx.body !== "Gba Oeste")
+			) {
+				const list = {
+					header: {
+						type: "text",
+						text: "",
+					},
+					body: {
+						text: "Seleccioná tu *Zona de Residencia*",
+					},
+					footer: {
+						text: "",
+					},
+					action: {
+						button: "ZONAS",
+						sections: [
+							{
+								title: "",
+								rows: [
+									{
+										id: "Caba",
+										title: "CABA",
+									},
+									{
+										id: "Gba Norte",
+										title: "GBA Norte",
+									},
+									{
+										id: "Gba Sur",
+										title: "GBA Sur",
+									},
+									{
+										id: "Gba Oeste",
+										title: "GBA Oeste",
+									},
+									{
+										id: "Salir",
+										title: "Volver al menu principal",
+									},
+								],
+							},
+						],
+					},
+				};
+				await provider.sendMessage(
+					ctx.from,
+					"*Localidad* ingresada invalida, selecciona una de las localidades",
+					{ options: null }
+				);
+				await provider.sendList(ctx.from, list);
 
-			return fallBack();
+				return fallBack();
+			}
+			if (ctx.body === "Salir") {
+				state.clear();
+				return gotoFlow(flowSaludo);
+			}
+			await state.update({ localidad: ctx.body });
+			return;
 		}
-		await state.update({ localidad: ctx.body });
-		return;
-	})
+	)
 	.addAnswer(
 		"*Email* de contacto:",
 		{ capture: true },
@@ -979,7 +1006,8 @@ const flowFormulario = addKeyword("Quiero ser Socio")
 					ctx.body !== "e" &&
 					ctx.body !== "f" &&
 					ctx.body !== "g" &&
-					ctx.body !== "h")
+					ctx.body !== "h" &&
+					ctx.body !== "Salir")
 			) {
 				const list = {
 					header: {
@@ -1103,12 +1131,19 @@ const flowFormulario = addKeyword("Quiero ser Socio")
 					await state.update({ edadeshijos: [] });
 					return gotoFlow(flowDataConyuge);
 				default:
-					return;
+					state.clear();
+					return gotoFlow(flowSaludo);
 			}
 		}
 	);
 
-const flowSaludo = addKeyword(["hi", "hello", "hola", "ola"]).addAnswer(
+const flowSaludo = addKeyword([
+	"hi",
+	"hello",
+	"hola",
+	"ola",
+	EVENTS.ACTION,
+]).addAnswer(
 	"¡Hola!, ¿cómo estás? 👋\nSoy el BOT Comercial de COBER | Medicina Privada 😁\nPara continuar con el procedimiento, voy a necesitar que indiques una de las siguientes opciones:",
 	{
 		buttons: [{ body: "Soy Socio" }, { body: "Quiero ser Socio" }],

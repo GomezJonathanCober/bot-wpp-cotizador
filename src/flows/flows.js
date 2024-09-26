@@ -26,13 +26,13 @@ export async function generateAndSendFlow(from, data, tokenPoliza) {
 			type: "flow",
 			header: {
 				type: "text",
-				text: "Formulario Cober",
+				text: "Solicitud de reserva precio promocional",
 			},
 			body: {
-				text: "Complete el siguiente formulario",
+				text: "Completando el siguiente formulario el usuario reserva durante 72 hs un cupo para la contratación de cualquiera de los planes médico asistenciales ofrecidos por Cober medicina privada.\nEl mismo no es de carácter contractual y queda sujeto a aprobación del departamento comercial y auditoría.\nPromoción válida únicamente para nuevas contrataciones.",
 			},
 			footer: {
-				text: "Footer",
+				text: "Superintendencia de Servicios de Salud | R.N.E.M.P: 111537",
 			},
 			action: {
 				name: "flow",
@@ -161,7 +161,7 @@ export async function recibirDataFlow(req, res) {
 		console.log("-----------------------------");
 		await updateCell(createPoliza[userId].userRow, 19, "Formulario Terminado");
 		delete createPoliza[userId];
-		delete createPoliza[updatePoliza];
+		delete updatePoliza[userId];
 	}
 	console.log(screenResponse);
 	if (!screenResponse["screen"]) {
