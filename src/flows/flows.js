@@ -40,7 +40,7 @@ export async function generateAndSendFlow(from, data, tokenPoliza) {
 					flow_id: "2336495346690501",
 					flow_message_version: "3",
 					flow_token: flow_token, //,
-					flow_cta: "Poliza Cober",
+					flow_cta: "Solicitar reserva",
 					flow_action: "navigate",
 					flow_action_payload: {
 						screen: "TITULAR",
@@ -103,6 +103,7 @@ export async function generateAndSendFlow(from, data, tokenPoliza) {
 		.then((response) => response.text())
 		.then((result) => {
 			if (result) {
+				console.log(result);
 				updateCell(data["userRow"], 19, "Formulario Enviado").then((res) => {
 					createPoliza[flow_token] = {};
 					Object.assign(createPoliza[flow_token], data);
