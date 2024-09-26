@@ -37,7 +37,7 @@ export async function generateAndSendFlow(from, data, tokenPoliza) {
 			action: {
 				name: "flow",
 				parameters: {
-					flow_id: "2336495346690501",
+					flow_id: process.env.FLOW_ID,
 					flow_message_version: "3",
 					flow_token: flow_token, //,
 					flow_cta: "Solicitar reserva",
