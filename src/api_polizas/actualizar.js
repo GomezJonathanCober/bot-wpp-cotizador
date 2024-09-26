@@ -1,5 +1,5 @@
 export async function actualizarPoliza(data, userId) {
-	console.log("Entre a actualizar la poliza");
+	//console.log("Entre a actualizar la poliza");
 	const myHeaders = new Headers();
 	myHeaders.append("Content-Type", "application/json");
 
@@ -21,20 +21,23 @@ export async function actualizarPoliza(data, userId) {
 		}
 
 		const responseJson = await response.json();
-		console.log("Actualizar Poliza:", responseJson);
+		//console.log("Actualizar Poliza:", responseJson);
 		await new Promise((resolve) => setTimeout(resolve, 3000));
 		console.log("Enviar pdf a:", userId);
-		const sendPdf = await fetch("http://localhost:8080/v1/messages", {
-			method: "POST",
-			headers: myHeaders,
-			body: JSON.stringify({
-				number: userId,
-				message: "Su solicitud",
-				urlMedia: responseJson.URL,
-			}),
-		});
+		const sendPdf = await fetch(
+			`https://${process.env.DOMINIO_PROD}/v1/messages`,
+			{
+				method: "POST",
+				headers: myHeaders,
+				body: JSON.stringify({
+					number: userId,
+					message: "Su solicitud",
+					urlMedia: responseJson.URL,
+				}),
+			}
+		);
 		const sendpdfjson = await sendPdf.text();
-		console.log("SendPDF:", sendpdfjson);
+		//console.log("SendPDF:", sendpdfjson);
 		return responseJson;
 	} catch (error) {
 		console.error("Error al realizar la solicitud:", error);

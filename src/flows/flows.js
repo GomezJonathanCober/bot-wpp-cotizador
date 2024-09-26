@@ -147,23 +147,23 @@ export async function recibirDataFlow(req, res) {
 	const { aesKeyBuffer, initialVectorBuffer, decryptedBody } = decryptedRequest;
 	//console.log("💬 Decrypted Request:", decryptedBody);
 	let { action } = decryptedBody;
-	console.log("Action:", action);
+	//console.log("Action:", action);
 
 	const { screenResponse, userId } = await getNextScreen(decryptedBody);
 
 	//console.log("👉 Response to Encrypt:", screenResponse);
 	if (screenResponse && screenResponse["screen"] === "DESPEDIDA") {
 		await actualizarPoliza(updatePoliza[userId], userId);
-		console.log("-----------------------------");
+		/* console.log("-----------------------------");
 		console.log("CREATE POLIZA:", createPoliza[userId]);
 		console.log("-----------------------------");
 		console.log("UPDATE POLIZA:", updatePoliza[userId]);
-		console.log("-----------------------------");
+		console.log("-----------------------------"); */
 		await updateCell(createPoliza[userId].userRow, 19, "Formulario Terminado");
 		delete createPoliza[userId];
 		delete updatePoliza[userId];
 	}
-	console.log(screenResponse);
+	//console.log(screenResponse);
 	if (!screenResponse["screen"]) {
 		res.send(
 			encryptResponse(screenResponse, aesKeyBuffer, initialVectorBuffer)
@@ -244,16 +244,16 @@ async function getNextScreen(decryptedBody) {
 				Object.assign(updatePoliza[flow_token], data);
 				if (form[flow_token]["estadoTit"] === "Individual") {
 					if (form[flow_token]["hijos"] === "Si") {
-						console.log("Next Screen: HIJO_UNO");
+						//console.log("Next Screen: HIJO_UNO");
 						screenResponse = { ...SCREEN_RESPONSES.HIJO_UNO };
 					}
 					if (form[flow_token]["hijos"] === "No") {
-						console.log("Next Screen: DEC_TITULAR");
+						//console.log("Next Screen: DEC_TITULAR");
 						screenResponse = { ...SCREEN_RESPONSES.DEC_TITULAR };
 					}
 				}
 				if (form[flow_token]["estadoTit"] === "Matrimonio") {
-					console.log("Next Screen: ESPOSA");
+					//console.log("Next Screen: ESPOSA");
 					screenResponse = { ...SCREEN_RESPONSES.ESPOSA };
 				}
 				break;
@@ -261,11 +261,11 @@ async function getNextScreen(decryptedBody) {
 				data.fecha_nac_conyuge = convertirEpochAFecha(data.fecha_nac_conyuge);
 				Object.assign(updatePoliza[flow_token], data);
 				if (form[flow_token]["hijos"] === "Si") {
-					console.log("Next Screen: HIJO_UNO");
+					//console.log("Next Screen: HIJO_UNO");
 					screenResponse = { ...SCREEN_RESPONSES.HIJO_UNO };
 				}
 				if (form[flow_token]["hijos"] === "No") {
-					console.log("Next Screen: DEC_TITULAR");
+					//console.log("Next Screen: DEC_TITULAR");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_TITULAR };
 				}
 				break;
@@ -274,10 +274,10 @@ async function getNextScreen(decryptedBody) {
 				data.fnac_hijo = convertirEpochAFecha(data.fnac_hijo);
 				updatePoliza[flow_token].datos_hijos.push(data);
 				if (form[flow_token]["edadeshijos"].length > 1) {
-					console.log("Next Screen: HIJO_DOS");
+					//console.log("Next Screen: HIJO_DOS");
 					screenResponse = { ...SCREEN_RESPONSES.HIJO_DOS };
 				} else {
-					console.log("Next Screen: DEC_TITULAR");
+					//console.log("Next Screen: DEC_TITULAR");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_TITULAR };
 				}
 				break;
@@ -285,17 +285,17 @@ async function getNextScreen(decryptedBody) {
 				data.fnac_hijo = convertirEpochAFecha(data.fnac_hijo);
 				updatePoliza[flow_token].datos_hijos.push(data);
 				if (form[flow_token]["edadeshijos"].length > 2) {
-					console.log("Next Screen: HIJO_TRES");
+					//console.log("Next Screen: HIJO_TRES");
 					screenResponse = { ...SCREEN_RESPONSES.HIJO_TRES };
 				} else {
-					console.log("Next Screen: DEC_TITULAR");
+					//console.log("Next Screen: DEC_TITULAR");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_TITULAR };
 				}
 				break;
 			case "HIJO_TRES":
 				data.fnac_hijo = convertirEpochAFecha(data.fnac_hijo);
 				updatePoliza[flow_token].datos_hijos.push(data);
-				console.log("Next Screen: DEC_TITULAR");
+				//console.log("Next Screen: DEC_TITULAR");
 				screenResponse = { ...SCREEN_RESPONSES.DEC_TITULAR };
 				break;
 			case "DEC_TITULAR":
@@ -318,16 +318,16 @@ async function getNextScreen(decryptedBody) {
 				updatePoliza[flow_token].alturaTit = data.alturaTitular;
 				if (form[flow_token]["estadoTit"] === "Individual") {
 					if (form[flow_token]["hijos"] === "Si") {
-						console.log("Next Screen: DEC_HIJO_UNO");
+						//console.log("Next Screen: DEC_HIJO_UNO");
 						screenResponse = { ...SCREEN_RESPONSES.DEC_HIJO_UNO };
 					}
 					if (form[flow_token]["hijos"] === "No") {
-						console.log("Next Screen: DESPEDIDA");
+						//console.log("Next Screen: DESPEDIDA");
 						screenResponse = { ...SCREEN_RESPONSES.DESPEDIDA };
 					}
 				}
 				if (form[flow_token]["estadoTit"] === "Matrimonio") {
-					console.log("Next Screen: DEC_ESPOSA");
+					//console.log("Next Screen: DEC_ESPOSA");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_ESPOSA };
 				}
 				break;
@@ -346,11 +346,11 @@ async function getNextScreen(decryptedBody) {
 				updatePoliza[flow_token].pesoCony = data.pesoEsposa;
 				updatePoliza[flow_token].alturaCony = data.alturaEsposa;
 				if (form[flow_token]["hijos"] === "Si") {
-					console.log("Next Screen: DEC_HIJO_UNO");
+					//console.log("Next Screen: DEC_HIJO_UNO");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_HIJO_UNO };
 				}
 				if (form[flow_token]["hijos"] === "No") {
-					console.log("Next Screen: DESPEDIDA");
+					//console.log("Next Screen: DESPEDIDA");
 					screenResponse = { ...SCREEN_RESPONSES.DESPEDIDA };
 				}
 				break;
@@ -373,10 +373,10 @@ async function getNextScreen(decryptedBody) {
 					fum_hijo: "",
 				});
 				if (form[flow_token]["edadeshijos"].length > 1) {
-					console.log("Next Screen: DEC_HIJO_DOS");
+					//console.log("Next Screen: DEC_HIJO_DOS");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_HIJO_DOS };
 				} else {
-					console.log("Next Screen: DESPEDIDA");
+					//console.log("Next Screen: DESPEDIDA");
 					screenResponse = { ...SCREEN_RESPONSES.DESPEDIDA };
 				}
 				break;
@@ -398,10 +398,10 @@ async function getNextScreen(decryptedBody) {
 					fum_hijo: "",
 				});
 				if (form[flow_token]["edadeshijos"].length > 2) {
-					console.log("Next Screen: DEC_HIJO_TRES");
+					//console.log("Next Screen: DEC_HIJO_TRES");
 					screenResponse = { ...SCREEN_RESPONSES.DEC_HIJO_TRES };
 				} else {
-					console.log("Next Screen: DESPEDIDA");
+					//console.log("Next Screen: DESPEDIDA");
 					screenResponse = { ...SCREEN_RESPONSES.DESPEDIDA };
 				}
 				break;
@@ -422,7 +422,7 @@ async function getNextScreen(decryptedBody) {
 					altura_hijo: data.alturaHijoTres,
 					fum_hijo: "",
 				});
-				console.log("Next Screen: DESPEDIDA");
+				//console.log("Next Screen: DESPEDIDA");
 				screenResponse = { ...SCREEN_RESPONSES.DESPEDIDA };
 		}
 		return { screenResponse, userId };
@@ -438,7 +438,7 @@ async function getNextScreen(decryptedBody) {
 
 	if (action === "complete") {
 		console.log(`Action = ${action}`);
-		console.log("DATA POLIZA:", updatePoliza[flow_token]);
+		//console.log("DATA POLIZA:", updatePoliza[flow_token]);
 	}
 
 	// handle health check request
