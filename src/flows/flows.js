@@ -154,6 +154,11 @@ export async function recibirDataFlow(req, res) {
 
 	//console.log("👉 Response to Encrypt:", screenResponse);
 	if (screenResponse && screenResponse["screen"] === "DESPEDIDA") {
+		if (!updatePoliza[userId].update) {
+			delete createPoliza[userId];
+			delete updatePoliza[userId];
+			return;
+		}
 		await actualizarPoliza(updatePoliza[userId], userId);
 		/* console.log("-----------------------------");
 		console.log("CREATE POLIZA:", createPoliza[userId]);
@@ -486,8 +491,6 @@ function isRequestSignatureValid(req) {
 	if (!crypto.timingSafeEqual(digestBuffer, signatureBuffer)) {
 		console.error("Error: Request Signature did not match");
 		return false;
-	} else {
-		console.log("Firma Validada");
 	}
 	return true;
 }
