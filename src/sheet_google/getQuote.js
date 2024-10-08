@@ -24,14 +24,14 @@ export async function getQuote(rowNumber, form) {
 			Oxford: convertCurrencyStringToNumber(responseJson.sDs.oxford),
 			Taylored: convertCurrencyStringToNumber(responseJson.sDs.taylored),
 			Wagon: convertCurrencyStringToNumber(responseJson.sDs.wagon),
-			Zipper: convertCurrencyStringToNumber(responseJson.sDs.zipper),
+			//Zipper: convertCurrencyStringToNumber(responseJson.sDs.zipper),
 		},
 		quoteDs: {
 			Classic_X: convertCurrencyStringToNumber(responseJson.withDs.classic),
 			Oxford: convertCurrencyStringToNumber(responseJson.withDs.oxford),
 			Taylored: convertCurrencyStringToNumber(responseJson.withDs.taylored),
 			Wagon: convertCurrencyStringToNumber(responseJson.withDs.wagon),
-			Zipper: convertCurrencyStringToNumber(responseJson.withDs.zipper),
+			//Zipper: convertCurrencyStringToNumber(responseJson.withDs.zipper),
 		},
 		titular: {},
 	};

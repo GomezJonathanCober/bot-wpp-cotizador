@@ -1258,9 +1258,7 @@ function generateMsgsQuotes(cotizacion, form) {
 		wagon: {
 			link: new URL("https://medicina-privada.online/planes/wagon.png").href,
 		},
-		zipper: {
-			link: new URL("https://medicina-privada.online/planes/zipper.png").href,
-		},
+		//zipper: {link: new URL("https://medicina-privada.online/planes/zipper.png").href,},
 	};
 	let desglose = "";
 	let beneficio = "";
@@ -1268,7 +1266,7 @@ function generateMsgsQuotes(cotizacion, form) {
 	let beneficioOxford = "";
 	let beneficioTaylored = "";
 	let beneficioWagon = "";
-	let beneficioZipper = "";
+	//let beneficioZipper = "";
 
 	if (cotizacion.titular) {
 		if (cotizacion.titular.Promo) {
@@ -1285,9 +1283,9 @@ function generateMsgsQuotes(cotizacion, form) {
 			beneficioWagon = `$${parseFloat(
 				cotizacion.quotePure.Wagon * cotizacion.titular.Promo
 			).toFixed(0)}`;
-			beneficioZipper = `$${parseFloat(
+			/* beneficioZipper = `$${parseFloat(
 				cotizacion.quotePure.Zipper * cotizacion.titular.Promo
-			).toFixed(0)}`;
+			).toFixed(0)}`; */
 		}
 		if (cotizacion.titular["Recibo de sueldo"]) {
 			form.aporte = parseFloat(form.aporte);
@@ -1300,7 +1298,6 @@ function generateMsgsQuotes(cotizacion, form) {
 				cotizacion.titular["Monotributo"]
 			).toFixed(0)}`;
 		}
-
 		if (cotizacion.esposa) {
 			if (cotizacion.esposa["Recibo de sueldo"]) {
 				form.aporteConyuge = parseFloat(form.aporteConyuge);
@@ -1323,7 +1320,7 @@ function generateMsgsQuotes(cotizacion, form) {
 			oxford: `🟣 Plan Oxford:\nEquilibrio justo entre cobertura y prestadores. Seleccionamos lo mejor y armamos un plan 100% hecho para vos.\n\nCuota Pura: ~$${cotizacion.quotePure.Oxford}~${beneficio} ${beneficioOxford}${desglose}\n\nCuota final por mes: *$${cotizacion.quoteDs.Oxford}*`,
 			taylored: `🟤 Plan Taylored:\nUn plan de primer nivel. Los mejores especialistas, sanatorios, clínicas y centros médicos siempre a tu disposición.\n\nCuota Pura: ~$${cotizacion.quotePure.Taylored}~${beneficio} ${beneficioTaylored}${desglose}\n\nCuota final por mes: *$${cotizacion.quoteDs.Taylored}*`,
 			wagon: `🔵 Plan Wagon:\nCartilla médica premium, atención personalizada 24/7 y la más amplia cobertura prestacional. Gestioná tu cobertura 100% online.\n\nCuota Pura: ~$${cotizacion.quotePure.Wagon}~${beneficio} ${beneficioWagon}${desglose}\n\nCuota final por mes: *$${cotizacion.quoteDs.Wagon}*`,
-			zipper: `🟣 Plan Zipper:\nEl plan accesible que cubre todo lo que necesitás y más.\n\nCuota Pura: ~$${cotizacion.quotePure.Zipper}~${beneficio} ${beneficioZipper}${desglose}\n\nCuota final por mes: *$${cotizacion.quoteDs.Zipper}*`,
+			//zipper: `🟣 Plan Zipper:\nEl plan accesible que cubre todo lo que necesitás y más.\n\nCuota Pura: ~$${cotizacion.quotePure.Zipper}~${beneficio} ${beneficioZipper}${desglose}\n\nCuota final por mes: *$${cotizacion.quoteDs.Zipper}*`,
 		};
 	}
 	return { quotesMsgs, quotesImages };

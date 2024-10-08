@@ -154,18 +154,35 @@ export async function recibirDataFlow(req, res) {
 
 	//console.log("👉 Response to Encrypt:", screenResponse);
 	if (screenResponse && screenResponse["screen"] === "DESPEDIDA") {
-		if (!updatePoliza[userId].update) {
-			delete createPoliza[userId];
-			delete updatePoliza[userId];
-			return;
-		}
-		await actualizarPoliza(updatePoliza[userId], userId);
-		/* console.log("-----------------------------");
+		if (updatePoliza[userId].update) {
+			await actualizarPoliza(updatePoliza[userId], userId);
+			/* console.log("-----------------------------");
 		console.log("CREATE POLIZA:", createPoliza[userId]);
 		console.log("-----------------------------");
 		console.log("UPDATE POLIZA:", updatePoliza[userId]);
 		console.log("-----------------------------"); */
-		await updateCell(createPoliza[userId].userRow, 19, "Formulario Terminado");
+			await updateCell(
+				createPoliza[userId].userRow,
+				19,
+				"Formulario Terminado"
+			);
+		} else {
+			await new Promise((resolve) => setTimeout(resolve, 5000));
+			console.log("Enviar Mensaje:", userId);
+			const sendMessage = await fetch(
+				`https://${process.env.DOMINIO_PROD}/v1/messages`,
+				{
+					method: "POST",
+					headers: myHeaders,
+					body: JSON.stringify({
+						number: userId,
+						message: "Reserva efectuada exitosamente",
+					}),
+				}
+			);
+			const sendMessageJson = await sendMessage.text();
+			console.log("SendMessageJson:", sendMessageJson);
+		}
 		delete createPoliza[userId];
 		delete updatePoliza[userId];
 	}
