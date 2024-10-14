@@ -1187,15 +1187,21 @@ const main = async () => {
 		database: adapterDB,
 	});
 
-	adapterProvider.server.get("/pingjoni", async (bot, req, res) => {
-		await adapterProvider.sendMessage(process.env.PING_CEL, "pong", {
-			options: null,
-		});
-		return res.end("pong");
-	});
-
-	adapterProvider.server.get("/ping", async (bot, req, res) => {
-		await bot.sendMessage(process.env.PING_CEL, "pong", {
+	adapterProvider.server.post(
+		"/v1/pingjoni",
+		handleCtx(async (bot, req, res) => {
+			try {
+				const { number, name } = req.body;
+				await bot.dispatch("hola", { from: number, name });
+				return res.end("trigger");
+			} catch (error) {
+				console.log(error);
+				return res.end(error);
+			}
+		})
+	);
+	adapterProvider.server.get("/ping", (bot, req, res) => {
+		bot.sendMessage(process.env.PING_CEL, "pong", {
 			media: null,
 		});
 		return res.send("pong");
