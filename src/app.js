@@ -1187,7 +1187,7 @@ const main = async () => {
 	});
 
 	adapterProvider.server.get(
-		"/ping",
+		"/pingjoni",
 		handleCtx(async (bot, req, res) => {
 			await bot.sendMessage(process.env.PING_CEL, "pong", null);
 			return res.send("pong");
