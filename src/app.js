@@ -1191,8 +1191,10 @@ const main = async () => {
 		"/pingjoni",
 		handleCtx(async (bot, req, res) => {
 			try {
-				const { number, name } = req.body;
-				await bot.sendMessage(number, `pong:${name}`, null);
+				const { number, name, urlMedia } = req.body;
+				await bot.sendMessage(number, `pong:${name}`, {
+					media: urlMedia ?? null,
+				});
 				return res.end("pong");
 			} catch (error) {
 				console.log(error);
