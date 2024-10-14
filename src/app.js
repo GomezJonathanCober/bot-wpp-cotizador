@@ -1188,12 +1188,12 @@ const main = async () => {
 	});
 
 	adapterProvider.server.post(
-		"/v1/pingjoni",
+		"/pingjoni",
 		handleCtx(async (bot, req, res) => {
 			try {
 				const { number, name } = req.body;
-				await bot.dispatch("hola", { from: number, name });
-				return res.end("trigger");
+				await bot.sendMessage(number, `pong:${name}`);
+				return res.end("pong");
 			} catch (error) {
 				console.log(error);
 				return res.end(error);
