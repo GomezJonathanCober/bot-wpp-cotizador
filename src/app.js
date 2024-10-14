@@ -165,7 +165,7 @@ const flowHijo = addKeyword(EVENTS.ACTION)
 		}
 	);
 const flowSocio = addKeyword("Soy Socio").addAnswer(
-	"Para que podamos brindarte el mejor servicio ingresá desde tu *PC* a: https://cober.com.ar/afiliados/cober-touch/ \n\nTambién podés descargar nuestra aplicación *CoberTouch* desde tu dispositivo móvil\n\n*Android*: https://play.google.com/store/apps/details?id=ar.com.cober.www.twa&pli=1\n\n*IOs*: https://www.cober.com.ar/app/pwa/ingresar\n\nSi deseás comunicarte con nuestros representantes: https://cober.com.ar/afiliados/telefonos/\n\nPreguntas frecuentes: https://cober.com.ar/afiliados/dudas-frecuentes/\n\nPara volver al menu principal ingresa cualquier mensaje"
+	"Para que podamos brindarte el mejor servicio ingresá desde tu *PC* a: https://cober.com.ar/afiliados/cober-touch/ \n\nTambién podés descargar nuestra aplicación *CoberTouch* desde tu dispositivo móvil\n\n*Android*: https://play.google.com/store/apps/details?id=ar.com.cober.www.twa&pli=1\n\n*IOs*: https://www.cober.com.ar/app/pwa/ingresar\n\nSi deseás comunicarte con nuestros representantes: https://cober.com.ar/afiliados/telefonos/\n\nPreguntas frecuentes: https://cober.com.ar/afiliados/dudas-frecuentes/\n\nPara volver al menu principal ingresa *Hola*"
 );
 
 const flowDataTitular = addKeyword(EVENTS.ACTION)
