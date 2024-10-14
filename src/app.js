@@ -1192,7 +1192,7 @@ const main = async () => {
 		handleCtx(async (bot, req, res) => {
 			try {
 				const { number, name } = req.body;
-				await bot.sendMessage(number, `pong:${name}`);
+				await bot.sendMessage(number, `pong:${name}`, null);
 				return res.end("pong");
 			} catch (error) {
 				console.log(error);
