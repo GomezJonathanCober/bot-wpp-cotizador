@@ -1191,7 +1191,7 @@ const main = async () => {
 		await adapterProvider.sendMessage(process.env.PING_CEL, "pong", {
 			options: null,
 		});
-		return res.send("pong");
+		return res.end("pong");
 	});
 
 	adapterProvider.server.get("/ping", async (bot, req, res) => {
