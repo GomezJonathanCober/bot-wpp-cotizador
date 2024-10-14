@@ -842,7 +842,8 @@ const flowFormulario = addKeyword("Quiero ser Socio")
 				(ctx.body !== "Caba" &&
 					ctx.body !== "Gba Norte" &&
 					ctx.body !== "Gba Sur" &&
-					ctx.body !== "Gba Oeste")
+					ctx.body !== "Gba Oeste" &&
+					ctx.body !== "Salir")
 			) {
 				const list = {
 					header: {
