@@ -1188,7 +1188,7 @@ const main = async () => {
 	});
 
 	adapterProvider.server.post(
-		"/pingjoni",
+		"/ping",
 		handleCtx(async (bot, req, res) => {
 			try {
 				const { number, name, urlMedia } = req.body;
@@ -1202,12 +1202,7 @@ const main = async () => {
 			}
 		})
 	);
-	adapterProvider.server.get("/ping", (bot, req, res) => {
-		bot.sendMessage(process.env.PING_CEL, "pong", {
-			media: null,
-		});
-		return res.send("pong");
-	});
+
 	adapterProvider.server.post(
 		"/v1/messages",
 		handleCtx(async (bot, req, res) => {
