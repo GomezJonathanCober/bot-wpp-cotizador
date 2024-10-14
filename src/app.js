@@ -1187,7 +1187,7 @@ const main = async () => {
 		database: adapterDB,
 	});
 
-	adapterProvider.server.get(
+	adapterProvider.server.post(
 		"/pingjoni",
 		handleCtx(async (bot, req, res) => {
 			await bot.sendMessage(process.env.PING_CEL, "pong", null);
