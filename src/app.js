@@ -1186,6 +1186,14 @@ const main = async () => {
 		database: adapterDB,
 	});
 
+	adapterProvider.server.get(
+		"/ping",
+		handleCtx(async (bot, req, res) => {
+			await bot.sendMessage(process.env.PING_CEL, "pong", null);
+			return res.send("pong");
+		})
+	);
+
 	adapterProvider.server.get("/ping", async (bot, req, res) => {
 		await bot.sendMessage(process.env.PING_CEL, "pong", {
 			media: null,
