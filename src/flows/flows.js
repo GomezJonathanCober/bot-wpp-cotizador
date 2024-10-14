@@ -169,11 +169,13 @@ export async function recibirDataFlow(req, res) {
 		} else {
 			await new Promise((resolve) => setTimeout(resolve, 5000));
 			console.log("Enviar Mensaje:", userId);
+			const myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
 			const sendMessage = await fetch(
 				`https://${process.env.DOMINIO_PROD}/v1/messages`,
 				{
 					method: "POST",
-					//headers: myHeaders,
+					headers: myHeaders,
 					body: JSON.stringify({
 						number: userId,
 						message: "Reserva efectuada exitosamente",
