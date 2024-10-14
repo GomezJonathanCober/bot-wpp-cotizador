@@ -173,7 +173,7 @@ export async function recibirDataFlow(req, res) {
 				`https://${process.env.DOMINIO_PROD}/v1/messages`,
 				{
 					method: "POST",
-					headers: myHeaders,
+					//headers: myHeaders,
 					body: JSON.stringify({
 						number: userId,
 						message: "Reserva efectuada exitosamente",
