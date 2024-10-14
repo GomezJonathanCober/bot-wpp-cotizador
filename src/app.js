@@ -1206,10 +1206,15 @@ const main = async () => {
 	adapterProvider.server.post(
 		"/v1/messages",
 		handleCtx(async (bot, req, res) => {
-			const { number, message, urlMedia } = req.body;
-			console.log(`Me pegaron con: ${number} | ${message} | ${urlMedia}`);
-			await bot.sendMessage(number, message, { media: urlMedia ?? null });
-			return res.end("sended");
+			try {
+				const { number, message, urlMedia } = req.body;
+				console.log(`Me pegaron con: ${number} | ${message} | ${urlMedia}`);
+				await bot.sendMessage(number, message, { media: urlMedia ?? null });
+				return res.end(`Mensaje enviado a ${number}`);
+			} catch (error) {
+				console.log(error);
+				return res.end(error);
+			}
 		})
 	);
 
