@@ -1187,7 +1187,7 @@ const main = async () => {
 		database: adapterDB,
 	});
 
-	adapterProvider.server.post("/pingjoni", async (bot, req, res) => {
+	adapterProvider.server.get("/pingjoni", async (bot, req, res) => {
 		await adapterProvider.sendMessage(process.env.PING_CEL, "pong", {
 			options: null,
 		});
