@@ -1208,6 +1208,7 @@ const main = async () => {
 		handleCtx(async (bot, req, res) => {
 			try {
 				const { number, message, urlMedia } = req.body;
+				console.log(req.body);
 				console.log(`Me pegaron con: ${number} | ${message} | ${urlMedia}`);
 				await bot.sendMessage(number, message, { media: urlMedia ?? null });
 				return res.end(`Mensaje enviado a ${number}`);
